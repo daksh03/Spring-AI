@@ -11,6 +11,7 @@ import com.spring.ai.firstproject.first_project.tools.BranchTools;
 import com.spring.ai.firstproject.first_project.tools.FileTools;
 import com.spring.ai.firstproject.first_project.tools.PullTools;
 import com.spring.ai.firstproject.first_project.tools.RepoTools;
+import com.spring.ai.firstproject.first_project.tools.TagTools;
 
 @RestController
 @RequestMapping("/")
@@ -22,13 +23,15 @@ public class ChatController {
 	private final FileTools fileTools;
 	private final BranchTools branchTools;
 	private final PullTools pullTools;
+	private final TagTools tagTools;
 	
-	private ChatController(ChatClient.Builder builder,PullTools pullTools,RepoTools repoTools,FileTools fileTools, BranchTools branchTools) {
+	private ChatController(ChatClient.Builder builder,PullTools pullTools,RepoTools repoTools,FileTools fileTools, BranchTools branchTools, TagTools tagTools) {
 		this.chatClient=builder.build();
 		this.repoTools=repoTools;
 		this.fileTools=fileTools;
 		this.branchTools=branchTools;
 		this.pullTools=pullTools;
+		this.tagTools=tagTools;
 	}
 	
 
@@ -37,7 +40,7 @@ public class ChatController {
 
 	    var resultResponse = chatClient
 	            .prompt(q)
-	            .tools(repoTools, fileTools, branchTools, pullTools)
+	            .tools(repoTools, fileTools, branchTools, pullTools, tagTools)
 	            .call()
 	            .content();
 
