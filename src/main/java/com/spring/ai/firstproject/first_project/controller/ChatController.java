@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.ai.firstproject.first_project.config.AssistantPrompt;
 import com.spring.ai.firstproject.first_project.tools.BranchTools;
 import com.spring.ai.firstproject.first_project.tools.FileTools;
 import com.spring.ai.firstproject.first_project.tools.PullTools;
@@ -40,6 +41,7 @@ public class ChatController {
 
 	    var resultResponse = chatClient
 	            .prompt(q)
+	            .system(AssistantPrompt.SYSTEM_PROMPT)
 	            .tools(repoTools, fileTools, branchTools, pullTools, tagTools)
 	            .call()
 	            .content();

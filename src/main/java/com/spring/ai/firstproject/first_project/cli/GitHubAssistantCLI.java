@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.spring.ai.firstproject.first_project.advisor.ToolCallLoggingAdvisor;
+import com.spring.ai.firstproject.first_project.config.AssistantPrompt;
 import com.spring.ai.firstproject.first_project.tools.BranchTools;
 import com.spring.ai.firstproject.first_project.tools.FileTools;
 import com.spring.ai.firstproject.first_project.tools.PullTools;
@@ -20,9 +21,8 @@ import com.spring.ai.firstproject.first_project.tools.TagTools;
 
 @Component
 public class GitHubAssistantCLI implements CommandLineRunner {
-
+	
 	private final ChatClient chatClient;
-
 	private final RepoTools repoTools;
 	private final FileTools fileTools;
 	private final BranchTools branchTools;
@@ -80,7 +80,7 @@ public class GitHubAssistantCLI implements CommandLineRunner {
 
 					System.out.println("\n⏳ Thinking...");
 
-					ChatResponse chatResponse = chatClient.prompt().user(prompt)
+					ChatResponse chatResponse = chatClient.prompt().system(AssistantPrompt.SYSTEM_PROMPT).user(prompt)
 							.advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId))
 							.tools(repoTools, fileTools, branchTools, pullTools, tagTools).call().chatResponse();
 
