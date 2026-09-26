@@ -21,7 +21,7 @@ import com.spring.ai.firstproject.first_project.tools.TagTools;
 
 @Component
 public class GitHubAssistantCLI implements CommandLineRunner {
-	
+
 	private final ChatClient chatClient;
 	private final RepoTools repoTools;
 	private final FileTools fileTools;
@@ -35,8 +35,7 @@ public class GitHubAssistantCLI implements CommandLineRunner {
 		ChatMemory chatMemory = MessageWindowChatMemory.builder().maxMessages(20).build();
 
 		this.chatClient = builder
-				.defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(),
-						new ToolCallLoggingAdvisor())
+				.defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new ToolCallLoggingAdvisor())
 				.build();
 
 		this.repoTools = repoTools;
