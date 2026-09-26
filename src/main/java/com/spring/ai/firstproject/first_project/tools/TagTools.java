@@ -10,7 +10,8 @@ public class TagTools {
 
     private final RestClient restClient;
 
-    public TagTools(@Value("${github.token}") String githubToken) {
+    public TagTools(@Value("${github.token}") String githubToken,
+    		@Value("${github.organization}") String organization) {
 
         this.restClient = RestClient.builder()
                 .baseUrl("https://api.github.com")
@@ -51,7 +52,7 @@ public class TagTools {
             // First get the commit SHA of the branch
             BranchResponse branch = restClient
                     .get()
-                    .uri("/repos/migrationPOCAction/"
+                    .uri("/repos/{organization}/"
                             + repositoryName
                             + "/git/ref/heads/"
                             + branchName)
@@ -75,7 +76,7 @@ public class TagTools {
 
             ReferenceResponse response = restClient
                     .post()
-                    .uri("/repos/migrationPOCAction/"
+                    .uri("/repos/{organization}/"
                             + repositoryName
                             + "/git/refs")
                     .body(request)

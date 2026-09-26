@@ -10,7 +10,8 @@ public class PullTools {
 
     private final RestClient restClient;
 
-    public PullTools(@Value("${github.token}") String githubToken) {
+    public PullTools(@Value("${github.token}") String githubToken,
+    		@Value("${github.organization}") String organization) {
 
         this.restClient = RestClient.builder()
                 .baseUrl("https://api.github.com")
@@ -53,7 +54,7 @@ public class PullTools {
 
             PullRequestResponse response = restClient
                     .post()
-                    .uri("/repos/migrationPOCAction/"
+                    .uri("/repos/{organization}/"
                             + repositoryName
                             + "/pulls")
                     .body(request)
@@ -96,7 +97,7 @@ public class PullTools {
 
             MergeResponse response = restClient
                     .put()
-                    .uri("/repos/migrationPOCAction/"
+                    .uri("/repos/{organization}/"
                             + repositoryName
                             + "/pulls/"
                             + pullRequestNumber
